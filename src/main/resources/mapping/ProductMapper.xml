@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.barcode.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.barcode.model.Product">
+    <id column="product_type" jdbcType="VARCHAR" property="productType" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_code" jdbcType="VARCHAR" property="productCode" />
+    <result column="product_color" jdbcType="VARCHAR" property="productColor" />
+    <result column="product_display_size" jdbcType="VARCHAR" property="productDisplaySize" />
+    <result column="product_info" jdbcType="VARCHAR" property="productInfo" />
+    <result column="product_weight" jdbcType="VARCHAR" property="productWeight" />
+    <result column="product_pack_size" jdbcType="VARCHAR" property="productPackSize" />
+    <result column="product_PN" jdbcType="VARCHAR" property="productPn" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    product_type, product_name, product_code, product_color, product_display_size, product_info, 
+    product_weight, product_pack_size, product_PN
+  </sql>
+  <select id="selectByExample" parameterType="com.barcode.model.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where product_type = #{productType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from product
+    where product_type = #{productType,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.barcode.model.ProductExample">
+    delete from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.barcode.model.Product">
+    insert into product (product_type, product_name, product_code, 
+      product_color, product_display_size, product_info, 
+      product_weight, product_pack_size, product_PN
+      )
+    values (#{productType,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, 
+      #{productColor,jdbcType=VARCHAR}, #{productDisplaySize,jdbcType=VARCHAR}, #{productInfo,jdbcType=VARCHAR}, 
+      #{productWeight,jdbcType=VARCHAR}, #{productPackSize,jdbcType=VARCHAR}, #{productPn,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.barcode.model.Product">
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productType != null">
+        product_type,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productCode != null">
+        product_code,
+      </if>
+      <if test="productColor != null">
+        product_color,
+      </if>
+      <if test="productDisplaySize != null">
+        product_display_size,
+      </if>
+      <if test="productInfo != null">
+        product_info,
+      </if>
+      <if test="productWeight != null">
+        product_weight,
+      </if>
+      <if test="productPackSize != null">
+        product_pack_size,
+      </if>
+      <if test="productPn != null">
+        product_PN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productType != null">
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productColor != null">
+        #{productColor,jdbcType=VARCHAR},
+      </if>
+      <if test="productDisplaySize != null">
+        #{productDisplaySize,jdbcType=VARCHAR},
+      </if>
+      <if test="productInfo != null">
+        #{productInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="productWeight != null">
+        #{productWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="productPackSize != null">
+        #{productPackSize,jdbcType=VARCHAR},
+      </if>
+      <if test="productPn != null">
+        #{productPn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.barcode.model.ProductExample" resultType="java.lang.Long">
+    select count(*) from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update product
+    <set>
+      <if test="record.productType != null">
+        product_type = #{record.productType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productCode != null">
+        product_code = #{record.productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productColor != null">
+        product_color = #{record.productColor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDisplaySize != null">
+        product_display_size = #{record.productDisplaySize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productInfo != null">
+        product_info = #{record.productInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productWeight != null">
+        product_weight = #{record.productWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productPackSize != null">
+        product_pack_size = #{record.productPackSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productPn != null">
+        product_PN = #{record.productPn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update product
+    set product_type = #{record.productType,jdbcType=VARCHAR},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      product_code = #{record.productCode,jdbcType=VARCHAR},
+      product_color = #{record.productColor,jdbcType=VARCHAR},
+      product_display_size = #{record.productDisplaySize,jdbcType=VARCHAR},
+      product_info = #{record.productInfo,jdbcType=VARCHAR},
+      product_weight = #{record.productWeight,jdbcType=VARCHAR},
+      product_pack_size = #{record.productPackSize,jdbcType=VARCHAR},
+      product_PN = #{record.productPn,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.barcode.model.Product">
+    update product
+    <set>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productColor != null">
+        product_color = #{productColor,jdbcType=VARCHAR},
+      </if>
+      <if test="productDisplaySize != null">
+        product_display_size = #{productDisplaySize,jdbcType=VARCHAR},
+      </if>
+      <if test="productInfo != null">
+        product_info = #{productInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="productWeight != null">
+        product_weight = #{productWeight,jdbcType=VARCHAR},
+      </if>
+      <if test="productPackSize != null">
+        product_pack_size = #{productPackSize,jdbcType=VARCHAR},
+      </if>
+      <if test="productPn != null">
+        product_PN = #{productPn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where product_type = #{productType,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.barcode.model.Product">
+    update product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      product_color = #{productColor,jdbcType=VARCHAR},
+      product_display_size = #{productDisplaySize,jdbcType=VARCHAR},
+      product_info = #{productInfo,jdbcType=VARCHAR},
+      product_weight = #{productWeight,jdbcType=VARCHAR},
+      product_pack_size = #{productPackSize,jdbcType=VARCHAR},
+      product_PN = #{productPn,jdbcType=VARCHAR}
+    where product_type = #{productType,jdbcType=VARCHAR}
+  </update>
+
+  <select id="dataMap" resultType="map">
+  SELECT
+	product_type    type,
+	product_name	name,
+	product_code	code,
+	product_color	color,
+	product_display_size	displaySize,
+	product_info	info,
+	product_weight  weight,
+	product_pack_size	packSize,
+	product_PN	pn
+  FROM `product`
+  WHERE product_type=#{type}
+  </select>
+</mapper>
